@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Copy URL & QR Code Generator Settings</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f8f9fa;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #4285f4;
+    }
+
+    .header h1 {
+      color: #333;
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .header p {
+      color: #666;
+      margin: 10px 0 0 0;
+    }
+
+    .section {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .section h2 {
+      color: #333;
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 18px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .setting-item {
+      margin-bottom: 15px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .setting-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .setting-label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .setting-description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .setting-control select,
+    .setting-control input[type="number"] {
+      width: 200px;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .setting-control input[type="checkbox"] {
+      margin-right: 8px;
+      transform: scale(1.2);
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .save-btn {
+      background: #4285f4;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .save-btn:hover {
+      background: #3367d6;
+    }
+
+    .reset-btn {
+      background: #666;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .reset-btn:hover {
+      background: #555;
+    }
+
+    .button-group {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .status-message {
+      text-align: center;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+      display: none;
+    }
+
+    .status-message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .status-message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📋 Copy URL & QR Settings</h1>
+    <p>Customize your URL copying experience</p>
+  </div>
+
+  <div id="statusMessage" class="status-message"></div>
+
+  <div class="section">
+    <h2>🎯 Copy Behavior</h2>
+    
+    <div class="setting-item">
+      <label class="setting-label" for="defaultFormat">Default Copy Format</label>
+      <div class="setting-description">Choose the default format when copying URLs</div>
+      <div class="setting-control">
+        <select id="defaultFormat">
+          <option value="plain">Plain URL</option>
+          <option value="markdown">Markdown Link</option>
+          <option value="html">HTML Link</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="setting-item">
+      <label class="checkbox-label">
+        <input type="checkbox" id="showNotification">
+        <span class="setting-label">Show copy notifications</span>
+      </label>
+      <div class="setting-description">Display a brief notification when URLs are copied</div>
+    </div>
+
+    <div class="setting-item">
+      <label class="checkbox-label">
+        <input type="checkbox" id="showFloatingButton">
+        <span class="setting-label">Show floating copy button</span>
+      </label>
+      <div class="setting-description">Display a draggable floating copy button on web pages</div>
+    </div>
+
+    <div class="setting-item">
+      <button id="resetButtonPosition" class="reset-btn">Reset Button Position</button>
+      <div class="setting-description">Reset the floating button to its default position</div>
+    </div>
+
+    <div class="setting-item">
+      <label class="checkbox-label">
+        <input type="checkbox" id="enableQrCode">
+        <span class="setting-label">Enable QR code generation</span>
+      </label>
+      <div class="setting-description">Show QR code options in popup and context menu</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📚 History Settings</h2>
+    
+    <div class="setting-item">
+      <label class="checkbox-label">
+        <input type="checkbox" id="copyHistory">
+        <span class="setting-label">Enable copy history</span>
+      </label>
+      <div class="setting-description">Keep track of recently copied URLs</div>
+    </div>
+
+    <div class="setting-item">
+      <label class="setting-label" for="maxHistoryItems">Maximum history items</label>
+      <div class="setting-description">Number of URLs to keep in history</div>
+      <div class="setting-control">
+        <input type="number" id="maxHistoryItems" min="5" max="50" value="10">
+      </div>
+    </div>
+
+    <div class="setting-item">
+      <button id="clearHistoryBtn" class="reset-btn">Clear History</button>
+      <div class="setting-description">Remove all saved URLs from history</div>
+    </div>
+  </div>
+
+  <div class="button-group">
+    <button id="saveBtn" class="save-btn">Save Settings</button>
+    <button id="resetBtn" class="reset-btn">Reset to Defaults</button>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

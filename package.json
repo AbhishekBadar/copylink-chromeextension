@@ -1,0 +1,29 @@
+{
+  "name": "copy-url-qr-chrome-extension",
+  "version": "1.0.0",
+  "description": "A Chrome extension for quickly copying URLs with multiple formats and QR code generation",
+  "scripts": {
+    "build-qr": "npx esbuild ./node_modules/qrcode/lib/browser.js --bundle --minify --format=iife --global-name=QRCode --outfile=lib/qrcode.min.js",
+    "dev": "echo 'Load the extension in Chrome developer mode from this folder'",
+    "build": "npm run build-qr && echo 'Extension is ready for Chrome Web Store submission'",
+    "clean": "rm -f copylink-extension-*.zip",
+    "package": "node scripts/build.js",
+    "validate": "node scripts/validate.js",
+    "store-ready": "npm run clean && npm run validate && npm run package"
+  },
+  "keywords": [
+    "chrome-extension",
+    "url-copy",
+    "clipboard",
+    "qr-code",
+    "productivity"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.25.9"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.3"
+  }
+}
